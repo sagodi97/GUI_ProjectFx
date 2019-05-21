@@ -10,8 +10,10 @@ import javafx.scene.text.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import global.Config;
+
 public class HuzzleButton extends Button {
-    private final String FONT = "src/model/resources/Font/UbuntuMono-Regular.ttf";
+    private final Config config = new Config();
     private final String BUTTON_SPOKO = "-fx-background-color: transparent; -fx-background-image: url('model/resources/img/blue_button02.jpg');";
     private final String BUTTON_PRESSED = "-fx-background-color: transparent; -fx-background-image: url('model/resources/img/blue_button03.jpg');";
 
@@ -26,7 +28,7 @@ public class HuzzleButton extends Button {
 
     private void setFONT(){
         try {
-            setFont(Font.loadFont(new FileInputStream(FONT),23));
+            setFont(Font.loadFont(new FileInputStream(config.FONTPATH),23));
         }catch (FileNotFoundException e){
             System.out.println(e);
             setFont(Font.font("monospace",23));

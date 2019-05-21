@@ -2,6 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/global/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/HuzzleSubscene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_ProjectFx/model/HuzzleButton$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_ProjectFx/model/HuzzleButton$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_ProjectFx/model/HuzzleButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_ProjectFx/model/HuzzleButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_ProjectFx/view/ViewManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_ProjectFx/view/ViewManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/HuzzleButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/HuzzleButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ViewManager.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -93,10 +100,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+            <state relative-caret-position="34">
+              <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#546#547#0" expanded="true" />
                 <element signature="e#577#578#0" expanded="true" />
               </folding>
@@ -105,10 +111,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/HuzzleSubscene.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="121">
+              <caret line="13" column="47" lean-forward="true" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/global/Config.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="85" selection-start-line="3" selection-start-column="85" selection-end-line="3" selection-end-column="85" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/HuzzleButton.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="15" column="105" selection-start-line="15" selection-start-column="105" selection-end-line="15" selection-end-column="105" />
+            <state relative-caret-position="272">
+              <caret line="16" column="123" selection-start-line="16" selection-start-column="103" selection-end-line="16" selection-end-column="123" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -157,7 +184,9 @@
       <list>
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/app/Main.java" />
+        <option value="$PROJECT_DIR$/src/global/Config.java" />
         <option value="$PROJECT_DIR$/src/model/HuzzleButton.java" />
+        <option value="$PROJECT_DIR$/src/model/HuzzleSubscene.java" />
         <option value="$PROJECT_DIR$/src/view/ViewManager.java" />
       </list>
     </option>
@@ -196,32 +225,6 @@
             <path>
               <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
               <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -234,7 +237,16 @@
               <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
               <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GUI_ProjectFx" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GUI_ProjectFx" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -353,22 +365,22 @@
       <option name="presentableId" value="Default" />
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
-      <workItem from="1558369935326" duration="12685000" />
+      <workItem from="1558369935326" duration="22797000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13987000" />
+    <option name="totallyTimeSpent" value="24099000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.25192803" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.20895523" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -376,7 +388,7 @@
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.16733068" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18435155" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -387,9 +399,10 @@
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Profiler" order="11" />
       <window_info anchor="bottom" id="Event Log" order="12" />
-      <window_info anchor="bottom" id="Messages" order="13" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.3290461" />
       <window_info anchor="right" id="Maven" weight="0.32969153" />
       <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" x="0" y="0" width="434" height="866" id="Documentation" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Palette&#9;" />
       <window_info anchor="right" id="Theme Preview" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -441,20 +454,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/HuzzleButton.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="15" column="105" selection-start-line="15" selection-start-column="105" selection-end-line="15" selection-end-column="105" />
+        <state relative-caret-position="272">
+          <caret line="16" column="123" selection-start-line="16" selection-start-column="103" selection-end-line="16" selection-end-column="123" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
+    <entry file="file://$PROJECT_DIR$/src/model/HuzzleSubscene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+        <state relative-caret-position="121">
+          <caret line="13" column="47" lean-forward="true" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/global/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="85" selection-start-line="3" selection-start-column="85" selection-end-line="3" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+          <folding>
             <element signature="e#546#547#0" expanded="true" />
             <element signature="e#577#578#0" expanded="true" />
           </folding>
