@@ -1,9 +1,9 @@
 package model;
 
 public enum HERO {
-    ONE("model/resources/img/player_green.png"),
-    TWO(("model/resources/img/player_red.png")),
-    THREE(("model/resources/img/player_yellow.png"));
+    ONE("model/resources/img/ewa.png"),
+    TWO(("model/resources/img/werner.png")),
+    THREE(("model/resources/img/tomaszewski.png"));
 
     String heroUrl;
 

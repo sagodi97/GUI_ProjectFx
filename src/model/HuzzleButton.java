@@ -20,7 +20,7 @@ public class HuzzleButton extends Button {
     public HuzzleButton(String text){
         initListener();
         setText(text);
-        setFont(config.FONT());
+        setFont(config.FONT(23));
         setPrefWidth(190);
         setPrefHeight(49);
         setStyle(BUTTON_SPOKO);

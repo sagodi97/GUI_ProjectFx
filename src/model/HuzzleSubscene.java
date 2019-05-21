@@ -10,25 +10,21 @@ import global.Config;
 
 public class HuzzleSubscene extends SubScene {
 
-    private final static String BACKGROUNDIMG = "model/resources/img/blue_panel.png";
+    private final static String BACKGROUND_IMG = "model/resources/img/blue_panel.png";
     private final static Config config = new Config();
     public boolean isHidden;
 
-    public HuzzleSubscene(String testText) {
+    public AnchorPane pane;
+
+    public HuzzleSubscene() {
         super(new AnchorPane(), 635, 400);
 
-        BackgroundImage image = new BackgroundImage(new Image(BACKGROUNDIMG, 635, 400, false, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
-        AnchorPane pane = (AnchorPane) this.getRoot();
+        BackgroundImage image = new BackgroundImage(new Image(BACKGROUND_IMG, 635, 400, false, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        pane = (AnchorPane) this.getRoot();
         pane.setBackground(new Background(image));
         isHidden = true;
         setLayoutY(250);
         setLayoutX(1997);
-        Label testL = new Label();
-        testL.setText(testText);
-        testL.setFont(config.FONT());
-        testL.setLayoutX(100);
-        testL.setLayoutY(100);
-        pane.getChildren().add(testL);
     }
 
     public void toggleSubscene(){
