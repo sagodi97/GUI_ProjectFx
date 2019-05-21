@@ -25,7 +25,7 @@ public class HuzzleSubscene extends SubScene {
         setLayoutX(1997);
         Label testL = new Label();
         testL.setText(testText);
-        testL.setFont(new Font(config.FONTPATH, 30));
+        testL.setFont(config.FONT());
         testL.setLayoutX(100);
         testL.setLayoutY(100);
         pane.getChildren().add(testL);

@@ -20,19 +20,10 @@ public class HuzzleButton extends Button {
     public HuzzleButton(String text){
         initListener();
         setText(text);
-        setFONT();
+        setFont(config.FONT());
         setPrefWidth(190);
         setPrefHeight(49);
         setStyle(BUTTON_SPOKO);
-    }
-
-    private void setFONT(){
-        try {
-            setFont(Font.loadFont(new FileInputStream(config.FONTPATH),23));
-        }catch (FileNotFoundException e){
-            System.out.println(e);
-            setFont(Font.font("monospace",23));
-        }
     }
 
     private void setButtonPressed(){
