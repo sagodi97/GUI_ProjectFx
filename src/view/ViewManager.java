@@ -62,6 +62,7 @@ public class ViewManager {
         subescena.pane.getChildren().add(label);
         addSubscene(subescena);
         subescena.pane.getChildren().add(createHeroOptions());
+        subescena.pane.getChildren().add(createStartButton());
 
     }
 
@@ -137,6 +138,17 @@ public class ViewManager {
                 activeSubsceneIndex = -1;
             }
         });
+    }
+
+    private HuzzleButton createStartButton(){
+        HuzzleButton boton = new HuzzleButton("START!");
+        boton.setOnAction(event -> {
+            //OPEN SECOND VIEW WITH GAME
+            System.out.println("IT WORKS");
+        });
+        boton.setLayoutX(400);
+        boton.setLayoutY(320);
+        return boton;
     }
 
     private void createScoresButton(){
