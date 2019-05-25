@@ -143,8 +143,14 @@ public class ViewManager {
     private HuzzleButton createStartButton(){
         HuzzleButton boton = new HuzzleButton("START!");
         boton.setOnAction(event -> {
-            //OPEN SECOND VIEW WITH GAME
+            //TODO Connect to GameViewManager.
             System.out.println("IT WORKS");
+            GameViewManager newGame = new GameViewManager();
+            if(this.theChosenOne == null){
+                System.out.println("ELIGE TU HEROE PAPI");
+            }else {
+                newGame.createNewGame(this.theChosenOne, mainStage);
+            }
         });
         boton.setLayoutX(400);
         boton.setLayoutY(320);
