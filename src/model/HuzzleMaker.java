@@ -1,41 +1,36 @@
 package model;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Cell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class HuzzleMaker {
+
     public HuzzleMaker(){}
-    public ImageView[][] hacemeCuadritos(Image aMi, int rows, int cols, Pane pan){
-        ImageView[][] cuadricula = new ImageView[rows][cols];
+
+
+    public List<ImageView> hacemeCuadritos(Image aMi, int size){
+        List<ImageView> cuadricula = new ArrayList<>();
         double originalH = aMi.getHeight();
         double originalW = aMi.getWidth();
 
-        double pedazoH = originalH / rows;
-        double pedazoW = originalW / cols;
-
-        double starterX = 0;
-        double starterY = 0;
+        double pedazoH = originalH / size;
+        double pedazoW = originalW / size;
 
         System.out.println(originalW + "  x  " + originalH + "\n\n");
-        for(int r = 0; r < rows; r++){
-            starterX = 0;
-            for(int c = 0; c < cols; c++){
+        for(int r = 0; r < size; r++){
+            for(int c = 0; c < size; c++){
                 ImageView pedazo = new ImageView(aMi);
-                Rectangle2D moldeParaCortar = new Rectangle2D(starterX,starterY,pedazoW,pedazoH);
-                pedazo.setCache(true);
+                Rectangle2D moldeParaCortar = new Rectangle2D(pedazoW * r , pedazoH * c ,pedazoW,pedazoH);
                 pedazo.setViewport(moldeParaCortar);
-                cuadricula[r][c] = pedazo;
-                /*pedazo.setLayoutX(starterX);
-                pedazo.setLayoutY(starterY);
-                pan.getChildren().add(pedazo);*/
-                starterX =+ pedazoW;
+                cuadricula.add(pedazo);
             }
-            starterY += pedazoH;
         }
         return cuadricula;
     }
-
 }
