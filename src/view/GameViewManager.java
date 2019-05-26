@@ -4,13 +4,15 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.HERO;
 import model.HuzzleLabel;
 import model.HuzzleMaker;
+import model.HuzzlePuzzlePiece;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class GameViewManager {
@@ -25,15 +27,17 @@ class GameViewManager {
     private int puzzleSize;
 
 
-    private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/f78fda0e6a6d9a78c6b36a3e94662fe4/5D7A8730/t51.2885-15/e35/53246943_360348081233825_3550596113467512414_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
-    private Image pepe= new Image(imageUrl,750,750,false,true);
+    private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/5c3b5abb323beef9bfc4e3297cf74b60/5D7DFE60/t51.2885-15/e35/56669865_297095761190054_3170013358027075306_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
+    private Image pepe= new Image(imageUrl,600,600,false,true);
+    private List<HuzzlePuzzlePiece> expectedPuzzleBoard;
+    private List<HuzzlePuzzlePiece> puzzleBoard;
 
 
     private HuzzleMaker arquitecto;
     private  Pane testingG;
 
-    private static final int HEIGHT = 1000;
-    private static final int WIDTH = 1000;
+    private static final int HEIGHT =800;
+    private static final int WIDTH = 1300;
 
     GameViewManager(){
         arquitecto = new HuzzleMaker();
@@ -46,6 +50,9 @@ class GameViewManager {
         gamePane.setPadding(new Insets(10,10,10,10));
         gamePane.setHgap(5);
         gamePane.setVgap(5);
+        gamePane.setOnMouseClicked(event -> {
+            move(event);
+        });
 
         testingG = new AnchorPane();
 
@@ -82,12 +89,15 @@ class GameViewManager {
         ImageView solution = new ImageView(pepe);
         solution.setLayoutY(10);
         testingG.getChildren().add(solution);
-        List<ImageView> img = arquitecto.hacemeCuadritos(pepe, puzzleSize);
+        expectedPuzzleBoard = arquitecto.hacemeCuadritos(pepe, puzzleSize);
+        puzzleBoard = expectedPuzzleBoard;
+        shuffle();
+
         int row = 0;
         int col = 0;
-        for (int i = 0; i < (img.size() - 1); i++){
-            GridPane.setConstraints(img.get(i),row,col);
-            gamePane.getChildren().add(img.get(i));
+        for (int i = 0; i < (expectedPuzzleBoard.size() - 1); i++){
+            setPuzzlePiecePosition(expectedPuzzleBoard.get(i),row,col);
+            gamePane.getChildren().add(expectedPuzzleBoard.get(i).getImageView());
             if ((i + 1) % puzzleSize == 0){
                 row++;
                 col = 0;
@@ -95,5 +105,20 @@ class GameViewManager {
                 col++;
             }
         }
+    }
+
+    private void setPuzzlePiecePosition(HuzzlePuzzlePiece pieza, int row, int col){
+        GridPane.setConstraints(pieza.getImageView(),row,col);
+        pieza.setPos(row,col);
+    }
+
+    private void shuffle(){
+        Collections.shuffle(puzzleBoard);
+        System.out.println("Shuffled Puzzle");
+    }
+
+    private  void move(MouseEvent event){
+        Object target = event.getTarget();
+        System.out.println(target);
     }
 }
