@@ -84,7 +84,7 @@ class GameViewManager {
         this.menuStage.hide();
         this.gameStage.show();
         this.chosenHero = theOneAndOnly;
-        this.puzzleSize = 4;
+        this.puzzleSize = 3;
 
         ImageView solution = new ImageView(pepe);
         solution.setLayoutY(10);
@@ -95,9 +95,9 @@ class GameViewManager {
 
         int row = 0;
         int col = 0;
-        for (int i = 0; i < (expectedPuzzleBoard.size() - 1); i++){
-            setPuzzlePiecePosition(expectedPuzzleBoard.get(i),row,col);
-            gamePane.getChildren().add(expectedPuzzleBoard.get(i).getImageView());
+        for (int i = 0; i < puzzleBoard.size() ; i++){
+            setPuzzlePiecePosition(puzzleBoard.get(i),row,col);
+            gamePane.getChildren().add(puzzleBoard.get(i).getImageView());
             if ((i + 1) % puzzleSize == 0){
                 row++;
                 col = 0;
@@ -105,6 +105,7 @@ class GameViewManager {
                 col++;
             }
         }
+
     }
 
     private void setPuzzlePiecePosition(HuzzlePuzzlePiece pieza, int row, int col){
@@ -118,7 +119,9 @@ class GameViewManager {
     }
 
     private  void move(MouseEvent event){
-        Object target = event.getTarget();
-        System.out.println(target);
+        Object clickedThing = event.getTarget();
+        if (clickedThing instanceof ImageView) {
+            System.out.println(clickedThing);
+        }
     }
 }
