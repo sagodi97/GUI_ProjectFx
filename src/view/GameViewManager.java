@@ -1,10 +1,11 @@
 package view;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.HERO;
@@ -24,7 +25,10 @@ class GameViewManager {
     private Stage gameStage;
     private Stage menuStage;
     private HERO chosenHero;
+
     private int puzzleSize;
+    private int blankCol;
+    private int blankRow;
 
 
     private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/5c3b5abb323beef9bfc4e3297cf74b60/5D7DFE60/t51.2885-15/e35/56669865_297095761190054_3170013358027075306_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
@@ -50,9 +54,6 @@ class GameViewManager {
         gamePane.setPadding(new Insets(10,10,10,10));
         gamePane.setHgap(5);
         gamePane.setVgap(5);
-        gamePane.setOnMouseClicked(event -> {
-            move(event);
-        });
 
         testingG = new AnchorPane();
 
@@ -91,37 +92,61 @@ class GameViewManager {
         testingG.getChildren().add(solution);
         expectedPuzzleBoard = arquitecto.hacemeCuadritos(pepe, puzzleSize);
         puzzleBoard = expectedPuzzleBoard;
-        shuffle();
+        //shuffle();
 
         int row = 0;
         int col = 0;
         for (int i = 0; i < puzzleBoard.size() ; i++){
-            setPuzzlePiecePosition(puzzleBoard.get(i),row,col);
-            gamePane.getChildren().add(puzzleBoard.get(i).getImageView());
+
+            HuzzlePuzzlePiece piece = puzzleBoard.get(i);
+
+            if(piece.getImageView() == null){
+                this.blankCol = col;
+                this.blankRow = row;
+                continue;
+            }
+
+            setPuzzlePiecePosition(piece,col, row);
+
+
+
+            gamePane.getChildren().add(piece.getImageView());
+
+
+            piece.getImageView().setOnMouseClicked(event -> {
+                int distanceX = Math.abs(piece.getCol() - blankCol);
+                int distanceY = Math.abs(piece.getRow() - blankRow);
+
+                System.out.println("BLANK POS: " + blankRow + " X " + blankCol);
+                System.out.println("CLICKED " + piece.getRow() + " X " + piece.getCol()+ " |||  " +  "distanceY: " + distanceY  + "distanceX: " + distanceX );
+
+                if ((distanceX == 0 && distanceY == 1) || (distanceX == 1 && distanceY == 0)){
+                    int[] tmp = {piece.getCol(),piece.getRow()};
+                    setPuzzlePiecePosition(piece,blankCol,blankRow);
+                    blankRow = tmp[1];
+                    blankCol = tmp[0];
+
+                }
+                System.out.println("NEW BLANK POS: " + blankRow + " X " + blankCol);
+            });
+//            System.out.println((i+1) + " % " + puzzleSize + " = " + (i + 1) % puzzleSize);
             if ((i + 1) % puzzleSize == 0){
-                row++;
-                col = 0;
-            }else {
                 col++;
+                row = 0;
+            }else {
+                row++;
             }
         }
 
     }
 
-    private void setPuzzlePiecePosition(HuzzlePuzzlePiece pieza, int row, int col){
-        GridPane.setConstraints(pieza.getImageView(),row,col);
-        pieza.setPos(row,col);
+    private void setPuzzlePiecePosition(HuzzlePuzzlePiece pieza,int col, int row){
+        GridPane.setConstraints(pieza.getImageView(),col,row);
+        pieza.setPos(col,row);
     }
 
     private void shuffle(){
         Collections.shuffle(puzzleBoard);
         System.out.println("Shuffled Puzzle");
-    }
-
-    private  void move(MouseEvent event){
-        Object clickedThing = event.getTarget();
-        if (clickedThing instanceof ImageView) {
-            System.out.println(clickedThing);
-        }
     }
 }

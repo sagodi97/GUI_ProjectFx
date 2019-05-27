@@ -24,10 +24,19 @@ public class HuzzleMaker {
         System.out.println(originalW + "  x  " + originalH + "\n\n");
         for(int r = 0; r < size; r++){
             for(int c = 0; c < size; c++){
+
+                //SKIP LAST PIECE, CREATE EMPTY PUZZLE PIECE
+                if (r == size -1 && c == size -1){
+                    HuzzlePuzzlePiece puzzlePiece = new HuzzlePuzzlePiece();
+                    cuadricula.add(puzzlePiece);
+                    continue;
+                }
+
+                HuzzlePuzzlePiece puzzlePiece = new HuzzlePuzzlePiece();
                 ImageView pedazo = new ImageView(aMi);
                 Rectangle2D moldeParaCortar = new Rectangle2D(pedazoW * r , pedazoH * c ,pedazoW,pedazoH);
                 pedazo.setViewport(moldeParaCortar);
-                HuzzlePuzzlePiece puzzlePiece = new HuzzlePuzzlePiece(pedazo);
+                puzzlePiece.setImageView(pedazo);
                 cuadricula.add(puzzlePiece);
             }
         }

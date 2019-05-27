@@ -7,14 +7,8 @@ public class HuzzlePuzzlePiece {
     private int row;
     private int col;
 
-    public  HuzzlePuzzlePiece(ImageView imageView, int row, int col){
-        this.imageView = imageView;
-        this.row = row;
-        this.col = col;
-    }
+    public  HuzzlePuzzlePiece(){
 
-    public HuzzlePuzzlePiece(ImageView imageView){
-        this.imageView = imageView;
     }
 
     public ImageView getImageView(){
@@ -25,8 +19,16 @@ public class HuzzlePuzzlePiece {
         this.imageView = imageView;
     }
 
-    public void setPos(int row, int col){
+    public void setPos(int col, int row){
         this.row = row;
         this.col = col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 }
