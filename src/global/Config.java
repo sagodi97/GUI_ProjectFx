@@ -8,10 +8,10 @@ import java.io.FileNotFoundException;
 public class Config {
     public final String FONTPATH = "src/model/resources/Font/UbuntuMono-Regular.ttf";
 
-    public Font FONT(int sixe){
-        Font font = Font.font("monospace",sixe);
+    public Font FONT(int size){
+        Font font = Font.font("monospace",size);
         try {
-            font = Font.loadFont(new FileInputStream(FONTPATH),sixe);
+            font = Font.loadFont(new FileInputStream(FONTPATH),size);
         }catch (FileNotFoundException e){
             System.out.println(e);
         }finally {

@@ -4,27 +4,26 @@ import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import model.HERO;
-import model.HuzzleLabel;
-import model.HuzzleMaker;
-import model.HuzzlePuzzlePiece;
+import model.*;
 
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 class GameViewManager {
 
     private BorderPane borderPane;
     private Pane headerPane;
+    private Pane footerPane;
     private GridPane gamePane;
     private Scene gameScene;
     private Stage gameStage;
@@ -37,19 +36,20 @@ class GameViewManager {
     private int puzzleSize;
     private int blankCol;
     private int blankRow;
+    private Stack<Integer[]> coordinates;
     private boolean gameOn;
     private int seconds;
     private int minutes;
 
 
     private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/5c3b5abb323beef9bfc4e3297cf74b60/5D7DFE60/t51.2885-15/e35/56669865_297095761190054_3170013358027075306_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
-    private String tmpUrl = "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2018/03/italy_and_mediterranean/17402074-1-eng-GB/Italy_and_Mediterranean_node_full_image_2.jpg";
+    private String tmpUrl = "https://i.pinimg.com/originals/a6/57/67/a65767a39e90d3d98a3e100320d38b93.jpg";
     private Image pepe= new Image(tmpUrl,600,600,false,true);
     private List<HuzzlePuzzlePiece> puzzleBoard;
 
 
     private HuzzleMaker arquitecto;
-    private  Pane testingG;
+    private  Pane solutionArea;
 
     private static final int HEIGHT =800;
     private static final int WIDTH = 1300;
@@ -66,7 +66,7 @@ class GameViewManager {
         gamePane.setHgap(5);
         gamePane.setVgap(5);
 
-        testingG = new AnchorPane();
+        solutionArea = new AnchorPane();
 
         headerPane = new AnchorPane();
         panelBar = new HBox();
@@ -80,10 +80,26 @@ class GameViewManager {
         HBox puzzleArea = new HBox();
         puzzleArea.setSpacing(50);
         puzzleArea.getChildren().add(gamePane);
-        puzzleArea.getChildren().add(testingG);
+        puzzleArea.getChildren().add(solutionArea);
+
+        footerPane = new AnchorPane();
+        HBox bottomArea = new HBox();
+        HuzzleButton goBack = new HuzzleButton("Go Back");
+        goBack.setOnAction(event -> {
+            gameStage.close();
+            menuStage.show();
+        });
+//        HuzzleButton reShuffle = new HuzzleButton("Shuffle Again!");
+//        reShuffle.setOnAction(event -> {
+//            shuffle();
+//        });
+        bottomArea.getChildren().addAll(goBack);
+        bottomArea.setLayoutX(200);
+        bottomArea.setSpacing(200);
 
         borderPane.setTop(headerPane);
         borderPane.setCenter(puzzleArea);
+        borderPane.setBottom(bottomArea);
 
 
         gameScene = new Scene(borderPane, WIDTH, HEIGHT);
@@ -98,6 +114,7 @@ class GameViewManager {
         this.chosenHero = theOneAndOnly;
         this.puzzleSize = 3;
 
+        //TOP PANEL SET UP
         info = new HuzzleLabel(chosenHero.heroName,20);
         Image heroImg = new Image(chosenHero.heroUrl,40,40,true,true);
         info.setGraphic(new ImageView(heroImg));
@@ -105,15 +122,18 @@ class GameViewManager {
         gameOn = true;
         initReloj();
 
-
+        //PUT SOLUTION UP IN THE PANE
         ImageView solution = new ImageView(pepe);
         solution.setLayoutY(10);
-        testingG.getChildren().add(solution);
-        puzzleBoard = arquitecto.hacemeCuadritos(pepe, puzzleSize);
-        //shuffle();
+        solutionArea.getChildren().add(solution);
 
+        //CROP IMAGE INTO PIECES, CREATE A LIST OF PUZZLE PIECE OBJECTS AND SHUFFLE THEIR POSITION
+        puzzleBoard = arquitecto.hacemeCuadritos(pepe, puzzleSize);
+
+        //FILL THE GRIDPANE WITH THE PIECES
         int row = 0;
         int col = 0;
+
         for (int i = 0; i < puzzleBoard.size() ; i++){
 
             HuzzlePuzzlePiece piece = puzzleBoard.get(i);
@@ -127,11 +147,9 @@ class GameViewManager {
             setPuzzlePiecePosition(piece,col, row);
             piece.setSolvedPos(col,row);
 
-
-
             gamePane.getChildren().add(piece.getImageView());
 
-
+            //ADD EVENT LISTENER TO EACH PUZZLE PIECE
             piece.getImageView().setOnMouseClicked(event -> {
                 int distanceX = Math.abs(piece.getCol() - blankCol);
                 int distanceY = Math.abs(piece.getRow() - blankRow);
@@ -145,6 +163,7 @@ class GameViewManager {
 
                     if(userWon()){
                         gameOn = false;
+                        writeRecord();
                         gameOverDialog();
 
                     }
@@ -159,6 +178,8 @@ class GameViewManager {
             }
         }
 
+        shuffle();
+
     }
 
     private void setPuzzlePiecePosition(HuzzlePuzzlePiece pieza,int col, int row){
@@ -167,8 +188,46 @@ class GameViewManager {
     }
 
     private void shuffle(){
-        Collections.shuffle(puzzleBoard);
+        //CREATE A LIST OF POSSIBLE PAIRS;
+        coordinates = new Stack<>();
+        for (int i = 0; i < puzzleSize;i++){
+            for (int j = 0; j < puzzleSize;j++){
+                if (i == puzzleSize-1 && j == puzzleSize-1){
+                    break;
+                }
+                Integer[] pair = {i,j};
+                coordinates.add(pair);
+            }
+        }
+
+        //
+        int cnt = 0;
+        for (int i = 0; i < puzzleBoard.size()-1;i++) {
+            if (cnt % puzzleSize == 0){cnt = 0;}
+            if (cnt == puzzleSize-1 && i > (puzzleSize/100*80) ){cnt = 0;}
+
+            Collections.shuffle(coordinates);
+
+            int thiscol = coordinates.peek()[0];
+            int thisrow = coordinates.pop()[1];
+            setPuzzlePiecePosition(puzzleBoard.get(i),thiscol,thisrow);
+            System.out.println("COL " + thiscol + " x ROW " + thisrow);
+            cnt++;
+        }
         System.out.println("Shuffled Puzzle");
+        System.out.println("BLANK PIECE ORIGINAL POSITION -> " + puzzleBoard.get(0).getImageView() + " x " + puzzleBoard.get(0).getSolvedCol() );
+        System.out.println("BLANK PIECE CURRENT POSITION -> " + puzzleBoard.get(0).getRow() + " x " + puzzleBoard.get(0).getCol() );
+        System.out.println(blankRow + " x " + blankCol);
+
+//        for (int i: rows
+//        ) {
+//            System.out.println(i);
+//        }
+//        System.out.println("==================");
+//        for (int i: cols
+//        ) {
+//            System.out.println(i);
+//        }
     }
 
     private boolean userWon(){
@@ -212,8 +271,8 @@ class GameViewManager {
     void  gameOverDialog(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cool project right?");
-        alert.setHeaderText("Congrats! You can solve a puzzle ;)");
-        alert.setContentText("What now?");
+        alert.setHeaderText("What do you want to do now?");
+        alert.setContentText("Please choose an option");
 
         ButtonType goBack = new ButtonType("Main Menu");
         ButtonType getDaHelOut = new ButtonType("Exit");
@@ -228,6 +287,30 @@ class GameViewManager {
             gameStage.close();
         } else {
             gameStage.close();
+        }
+    }
+
+    String playerName(){
+        TextInputDialog dialog = new TextInputDialog("walter");
+        dialog.setTitle("Congratulations!");
+        dialog.setHeaderText("Let's save your record");
+        dialog.setContentText("Please enter your name:");
+        String tmp;
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            return result.get();
+        }else{
+            return "DefaultPlayer";
+        }
+    }
+
+    void writeRecord(){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("records.txt",true));
+            writer.write(seconds + "," + minutes + "," + chosenHero.heroUrl + "," + playerName()+"\n");
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 

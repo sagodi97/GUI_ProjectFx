@@ -1,16 +1,29 @@
 package view;
 
+import global.Config;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.*;
+import global.Config;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class ViewManager {
     private static final int HEIGHT = 700;
@@ -21,10 +34,12 @@ public class ViewManager {
     private final String BACKGROUNDIMG = "positive.png";
     private static final int MENU_START_X = 50;
     private static final int MENU_START_Y = 300;
+    Config config = new Config();
 
     List<HuzzleButton> menuButtons;
     List<HuzzleSubscene> subScenes;
     List<HeroOption> heroOptions;
+    List<HuzzleRecord> huzzleRecords;
     private HERO theChosenOne;
     int activeSubsceneIndex = -1;
 
@@ -38,6 +53,7 @@ public class ViewManager {
         renderLogo();
         subScenes = new ArrayList<>();
         menuButtons = new ArrayList<>();
+        huzzleRecords = new ArrayList<>();
         createSubscenes();
         createButtons();
 
@@ -95,7 +111,11 @@ public class ViewManager {
         HuzzleLabel label = new HuzzleLabel("INSTRUCTIONS",28);
         label.setLayoutY(20);
         label.setLayoutX(160);
-        subescena.pane.getChildren().add(label);
+        HuzzleLabel content = new HuzzleLabel("Click play, pick a player and go for it.\nIt's really that simple",28);
+        content.setPrefSize(300,300);
+        content.setLayoutX(160);
+        content.setLayoutY(80);
+        subescena.pane.getChildren().addAll(label,content);
         addSubscene(subescena);
     }
 
@@ -106,6 +126,7 @@ public class ViewManager {
         label.setLayoutX(160);
         subescena.pane.getChildren().add(label);
         addSubscene(subescena);
+
     }
 
     public Stage getMainStage(){
@@ -146,7 +167,6 @@ public class ViewManager {
         boton.setOnAction(event -> {
             GameViewManager newGame = new GameViewManager();
             if(this.theChosenOne == null){
-                //TODO CREATE ALERT COMPONENT
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
@@ -175,6 +195,12 @@ public class ViewManager {
             }else {
                 activeSubsceneIndex = -1;
             }
+
+            //Get scores
+            readScores();
+            //TODO Display to 5 scores
+            displayScores(subScenes.get(0));
+
         });
     }
 
@@ -217,6 +243,57 @@ public class ViewManager {
         mainPane.getChildren().add(logo);
     }
 
+    private void readScores() {
+        huzzleRecords.clear();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("records.txt"));
+            String line = reader.readLine();
+            while (line != null) {
+                String[] array = line.split(",");
+                HuzzleRecord record = new HuzzleRecord(Integer.parseInt(array[0]), Integer.parseInt(array[1]), array[2], array[3]);
+                huzzleRecords.add(record);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private void displayScores(HuzzleSubscene subScene){
+        if (huzzleRecords.size()>= 4) {
+            Collections.sort(huzzleRecords);
+            VBox records = new VBox();
+            records.setLayoutX(30);
+            records.setLayoutY(100);
+            records.setSpacing(10);
+            for (int i = 0; i < 4; i++) {
+                HBox record = new HBox();
+                record.setSpacing(25);
+                ImageView hero = new ImageView(new Image(huzzleRecords.get(i).heroUrl, 40, 40, true, true));
+                HuzzleLabel heroL = new HuzzleLabel(" "+(i+1),20);
+                heroL.setPrefSize(180,50);
+                heroL.setGraphic(hero);
+                HuzzleLabel name = new HuzzleLabel(huzzleRecords.get(i).playerName,20);
+                name.setPrefSize(180,50);
+                String minutes = huzzleRecords.get(i).minutes <= 9 ? "0"+huzzleRecords.get(i).minutes : "" + huzzleRecords.get(i).minutes;
+                String seconds = huzzleRecords.get(i).seconds <= 9 ? "0"+huzzleRecords.get(i).seconds : "" + huzzleRecords.get(i).seconds;;
+                HuzzleLabel time = new HuzzleLabel( minutes+ ":" + seconds,20);
+                time.setPrefSize(180,50);
+                record.getChildren().addAll(heroL, name, time);
+                records.getChildren().add(record);
+            }
+            subScene.pane.getChildren().add(records);
+        }else {
+            Label nada = new Label("Not enough data to display.\n\n Play some more and come back later ;)");
+            nada.setFont(config.FONT(28));
+            nada.setLayoutY(150);
+            nada.setLayoutX(50);
+            subScene.pane.getChildren().add(nada);
+
+        }
+    }
 
 
 
