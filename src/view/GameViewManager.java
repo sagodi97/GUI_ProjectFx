@@ -13,6 +13,7 @@ import model.HuzzleLabel;
 import model.HuzzleMaker;
 import model.HuzzlePuzzlePiece;
 
+
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +33,7 @@ class GameViewManager {
 
 
     private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/5c3b5abb323beef9bfc4e3297cf74b60/5D7DFE60/t51.2885-15/e35/56669865_297095761190054_3170013358027075306_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
+    private String tmpUrl = "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2018/03/italy_and_mediterranean/17402074-1-eng-GB/Italy_and_Mediterranean_node_full_image_2.jpg";
     private Image pepe= new Image(imageUrl,600,600,false,true);
     private List<HuzzlePuzzlePiece> expectedPuzzleBoard;
     private List<HuzzlePuzzlePiece> puzzleBoard;
@@ -107,6 +109,7 @@ class GameViewManager {
             }
 
             setPuzzlePiecePosition(piece,col, row);
+            piece.setSolvedPos(col,row);
 
 
 
@@ -117,8 +120,6 @@ class GameViewManager {
                 int distanceX = Math.abs(piece.getCol() - blankCol);
                 int distanceY = Math.abs(piece.getRow() - blankRow);
 
-                System.out.println("BLANK POS: " + blankRow + " X " + blankCol);
-                System.out.println("CLICKED " + piece.getRow() + " X " + piece.getCol()+ " |||  " +  "distanceY: " + distanceY  + "distanceX: " + distanceX );
 
                 if ((distanceX == 0 && distanceY == 1) || (distanceX == 1 && distanceY == 0)){
                     int[] tmp = {piece.getCol(),piece.getRow()};
@@ -126,10 +127,13 @@ class GameViewManager {
                     blankRow = tmp[1];
                     blankCol = tmp[0];
 
+                    if(userWon()){
+                        //TODO Stop timer and register time in file.
+                        System.out.println("I WIN");
+                    }
+
                 }
-                System.out.println("NEW BLANK POS: " + blankRow + " X " + blankCol);
             });
-//            System.out.println((i+1) + " % " + puzzleSize + " = " + (i + 1) % puzzleSize);
             if ((i + 1) % puzzleSize == 0){
                 col++;
                 row = 0;
@@ -148,5 +152,15 @@ class GameViewManager {
     private void shuffle(){
         Collections.shuffle(puzzleBoard);
         System.out.println("Shuffled Puzzle");
+    }
+
+    private boolean userWon(){
+        boolean good = true;
+         for (int i = 0; i<(puzzleSize*puzzleSize)-1; i++) {
+            if(!(puzzleBoard.get(i).getRow() == puzzleBoard.get(i).getSolvedRow()) || !(puzzleBoard.get(i).getCol() == puzzleBoard.get(i).getSolvedCol())){
+                good = false;
+            }
+         }
+        return good;
     }
 }

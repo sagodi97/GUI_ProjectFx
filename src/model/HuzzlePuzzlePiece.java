@@ -6,6 +6,8 @@ public class HuzzlePuzzlePiece {
     private ImageView imageView;
     private int row;
     private int col;
+    private int solvedRow;
+    private int solvedCol;
 
     public  HuzzlePuzzlePiece(){
 
@@ -30,5 +32,18 @@ public class HuzzlePuzzlePiece {
 
     public int getCol() {
         return col;
+    }
+
+    public void setSolvedPos(int col, int row){
+        this.solvedRow = row;
+        this.solvedCol = col;
+    }
+
+    public int getSolvedCol() {
+        return solvedCol;
+    }
+
+    public int getSolvedRow() {
+        return solvedRow;
     }
 }
