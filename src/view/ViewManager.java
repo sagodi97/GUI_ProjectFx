@@ -2,6 +2,7 @@ package view;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -145,7 +146,13 @@ public class ViewManager {
         boton.setOnAction(event -> {
             GameViewManager newGame = new GameViewManager();
             if(this.theChosenOne == null){
-                System.out.println("ELIGE TU HEROE PAPI");
+                //TODO CREATE ALERT COMPONENT
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select a player!");
+
+                alert.showAndWait();
             }else {
                 newGame.createNewGame(this.theChosenOne, mainStage);
             }

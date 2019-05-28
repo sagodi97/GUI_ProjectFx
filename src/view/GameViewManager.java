@@ -1,13 +1,16 @@
 package view;
 
-import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
 import model.HERO;
 import model.HuzzleLabel;
 import model.HuzzleMaker;
@@ -16,6 +19,7 @@ import model.HuzzlePuzzlePiece;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class GameViewManager {
 
@@ -25,17 +29,22 @@ class GameViewManager {
     private Scene gameScene;
     private Stage gameStage;
     private Stage menuStage;
+    private HuzzleLabel counter;
+    private HuzzleLabel info;
+    private HBox panelBar;
     private HERO chosenHero;
 
     private int puzzleSize;
     private int blankCol;
     private int blankRow;
+    private boolean gameOn;
+    private int seconds;
+    private int minutes;
 
 
     private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/5c3b5abb323beef9bfc4e3297cf74b60/5D7DFE60/t51.2885-15/e35/56669865_297095761190054_3170013358027075306_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
     private String tmpUrl = "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2018/03/italy_and_mediterranean/17402074-1-eng-GB/Italy_and_Mediterranean_node_full_image_2.jpg";
-    private Image pepe= new Image(imageUrl,600,600,false,true);
-    private List<HuzzlePuzzlePiece> expectedPuzzleBoard;
+    private Image pepe= new Image(tmpUrl,600,600,false,true);
     private List<HuzzlePuzzlePiece> puzzleBoard;
 
 
@@ -60,12 +69,12 @@ class GameViewManager {
         testingG = new AnchorPane();
 
         headerPane = new AnchorPane();
-        HBox panelBar = new HBox();
-        HuzzleLabel counter = new HuzzleLabel("TIEMPO", 18);
-        HuzzleLabel info = new HuzzleLabel("INFO, PLAYER, I.T.D", 18);
-        panelBar.setSpacing(30);
+        panelBar = new HBox();
+        counter = new HuzzleLabel("TIEMPO", 18);
+        panelBar.setLayoutX(50);
+        panelBar.setSpacing(600);
         panelBar.getChildren().add(counter);
-        panelBar.getChildren().add(info);
+
         headerPane.getChildren().add(panelBar);
 
         HBox puzzleArea = new HBox();
@@ -89,11 +98,18 @@ class GameViewManager {
         this.chosenHero = theOneAndOnly;
         this.puzzleSize = 3;
 
+        info = new HuzzleLabel(chosenHero.heroName,20);
+        Image heroImg = new Image(chosenHero.heroUrl,40,40,true,true);
+        info.setGraphic(new ImageView(heroImg));
+        panelBar.getChildren().add(info);
+        gameOn = true;
+        initReloj();
+
+
         ImageView solution = new ImageView(pepe);
         solution.setLayoutY(10);
         testingG.getChildren().add(solution);
-        expectedPuzzleBoard = arquitecto.hacemeCuadritos(pepe, puzzleSize);
-        puzzleBoard = expectedPuzzleBoard;
+        puzzleBoard = arquitecto.hacemeCuadritos(pepe, puzzleSize);
         //shuffle();
 
         int row = 0;
@@ -128,8 +144,9 @@ class GameViewManager {
                     blankCol = tmp[0];
 
                     if(userWon()){
-                        //TODO Stop timer and register time in file.
-                        System.out.println("I WIN");
+                        gameOn = false;
+                        gameOverDialog();
+
                     }
 
                 }
@@ -163,4 +180,55 @@ class GameViewManager {
          }
         return good;
     }
+
+    void initReloj() {
+
+        Task stopWatch = new Task() {
+            @Override
+            protected Integer call() throws Exception {
+                seconds = 0;
+                minutes = 0;
+                while (gameOn) {
+                    if (seconds == 60){
+                        minutes++;
+                        seconds =0;
+                    }
+                    updateMessage("Time Elapsed " + minutes + ":" +seconds);
+                    seconds++;
+                    Thread.sleep(1000);
+                }
+                return seconds;
+            }
+        };
+
+        counter.textProperty().bind(stopWatch.messageProperty());
+
+        Thread thread = new Thread(stopWatch);
+        thread.setDaemon(true);
+        thread.start();
+
+    }
+
+    void  gameOverDialog(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cool project right?");
+        alert.setHeaderText("Congrats! You can solve a puzzle ;)");
+        alert.setContentText("What now?");
+
+        ButtonType goBack = new ButtonType("Main Menu");
+        ButtonType getDaHelOut = new ButtonType("Exit");
+
+        alert.getButtonTypes().setAll(goBack, getDaHelOut);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == goBack) {
+            gameStage.close();
+            menuStage.show();
+        } else if (result.get() == getDaHelOut) {
+            gameStage.close();
+        } else {
+            gameStage.close();
+        }
+    }
+
 }

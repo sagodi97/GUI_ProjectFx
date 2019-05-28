@@ -20,8 +20,7 @@ public class HuzzleMaker {
 
         double pedazoH = originalH / size;
         double pedazoW = originalW / size;
-
-        System.out.println(originalW + "  x  " + originalH + "\n\n");
+        
         for(int r = 0; r < size; r++){
             for(int c = 0; c < size; c++){
 

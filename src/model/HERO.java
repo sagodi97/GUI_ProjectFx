@@ -1,13 +1,15 @@
 package model;
 
 public enum HERO {
-    ONE("model/resources/img/ewa.png"),
-    TWO(("model/resources/img/werner.png")),
-    THREE(("model/resources/img/tomaszewski.png"));
+    EWA("model/resources/img/ewa.png", "Ewa T."),
+    WERNER("model/resources/img/werner.png","T. Werner"),
+    TOMASZEWSKI("model/resources/img/tomaszewski.png", "M. Tomaszewski.");
 
-    String heroUrl;
+    public String heroUrl;
+    public String heroName;
 
-    private HERO(String heroUrl){
+    HERO(String heroUrl, String heroName){
         this.heroUrl = heroUrl;
+        this.heroName = heroName;
     }
 }
