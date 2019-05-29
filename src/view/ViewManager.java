@@ -111,9 +111,10 @@ public class ViewManager {
         HuzzleLabel label = new HuzzleLabel("INSTRUCTIONS",28);
         label.setLayoutY(20);
         label.setLayoutX(160);
-        HuzzleLabel content = new HuzzleLabel("Click play, pick a player and go for it.\nIt's really that simple",28);
-        content.setPrefSize(300,300);
-        content.setLayoutX(160);
+        Label content = new Label("Click play, pick a player,\n go for it. It's really that simple");
+        content.setFont(config.FONT(28));
+        content.setPrefSize(500,200);
+        content.setLayoutX(50);
         content.setLayoutY(80);
         subescena.pane.getChildren().addAll(label,content);
         addSubscene(subescena);
