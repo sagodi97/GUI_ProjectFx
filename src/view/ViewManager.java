@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
 import global.Config;
@@ -34,6 +35,7 @@ public class ViewManager {
     private final String BACKGROUNDIMG = "positive.png";
     private static final int MENU_START_X = 50;
     private static final int MENU_START_Y = 300;
+    private FileChooser imageChooser;
     Config config = new Config();
 
     List<HuzzleButton> menuButtons;
@@ -295,8 +297,4 @@ public class ViewManager {
 
         }
     }
-
-
-
-
 }

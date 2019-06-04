@@ -9,14 +9,14 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import model.*;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.util.*;
 
 class GameViewManager {
@@ -41,10 +41,8 @@ class GameViewManager {
     private int seconds;
     private int minutes;
 
-
-    private String imageUrl = "https://scontent-waw1-1.cdninstagram.com/vp/5c3b5abb323beef9bfc4e3297cf74b60/5D7DFE60/t51.2885-15/e35/56669865_297095761190054_3170013358027075306_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com";
-    private String tmpUrl = "https://i.pinimg.com/originals/a6/57/67/a65767a39e90d3d98a3e100320d38b93.jpg";
-    private Image pepe= new Image(tmpUrl,600,600,false,true);
+    private String pepeUrl;
+    private Image pepe;
     private List<HuzzlePuzzlePiece> puzzleBoard;
 
 
@@ -120,6 +118,14 @@ class GameViewManager {
         info.setGraphic(new ImageView(heroImg));
         panelBar.getChildren().add(info);
         gameOn = true;
+        showImageChooser();
+        if(pepeUrl != null) {
+            pepe = new Image(pepeUrl, 600, 600, false, true); //TODO replace empty string with filechooser method.
+        }else{
+            gameStage.close();
+            menuStage.show();
+            return;
+        }
         initReloj();
 
         //PUT SOLUTION UP IN THE PANE
@@ -312,6 +318,18 @@ class GameViewManager {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void showImageChooser(){
+        FileChooser imageChooser = new FileChooser();
+        imageChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Supported images", "*.bmp","*.gif","*.jpeg","*.png","*.jpg"));
+        File imgFile = imageChooser.showOpenDialog(gameStage);
+        try {
+            String absPath = imgFile.getAbsolutePath();
+            pepeUrl = new File(absPath).toURI().toURL().toString();
+            } catch (Exception e) {}
+
     }
 
 }
