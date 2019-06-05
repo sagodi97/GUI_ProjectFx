@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 public class Config {
     public final String FONTPATH = "src/model/resources/Font/UbuntuMono-Regular.ttf";
 
-    public Font origin(int size){
+    public Font handwriting(int size){
         Font font = Font.font("monospace",size);
         try {
             font = Font.loadFont(new FileInputStream(FONTPATH),size);
