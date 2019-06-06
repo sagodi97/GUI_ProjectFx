@@ -5,3 +5,6 @@
 10,8,model/resources/img/werner.png,DefaultPlayer
 34,1,model/resources/img/werner.png,Santiago!
 44,1,model/resources/img/ewa.png,Kasia!
+30,0,model/resources/img/ewa.png,Maria
+28,0,model/resources/img/werner.png,Maria
+26,0,model/resources/img/ewa.png,MARIA!!!

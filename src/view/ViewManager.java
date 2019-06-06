@@ -112,7 +112,7 @@ public class ViewManager {
         label.setLayoutY(20);
         label.setLayoutX(160);
         Label content = new Label("Click play, pick a player,\n go for it. It's really that simple");
-        content.setFont(config.FONT(28));
+        content.setFont(config.handwriting(28));
         content.setPrefSize(500,200);
         content.setLayoutX(50);
         content.setLayoutY(80);
@@ -288,7 +288,7 @@ public class ViewManager {
             subScene.pane.getChildren().add(records);
         }else {
             Label nada = new Label("Not enough data to display.\n\n Play some more and come back later ;)");
-            nada.setFont(config.FONT(28));
+            nada.setFont(config.handwriting(28));
             nada.setLayoutY(150);
             nada.setLayoutX(50);
             subScene.pane.getChildren().add(nada);

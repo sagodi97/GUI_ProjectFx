@@ -20,7 +20,7 @@ public class HuzzleLabel extends Label {
         setPrefWidth(300);
         setPrefHeight(50);
         setPadding(new Insets(5,5,5,5));
-        setFont(config.FONT(size));
+        setFont(config.handwriting(size));
         setText(text);
         BackgroundImage image = new BackgroundImage(new Image(BACKGROUND_IMG, 300, 60, false, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         setBackground(new Background(image));
