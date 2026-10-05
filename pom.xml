@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>huzzle</groupId>
+  <artifactId>GUI_ProjectFx</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+  <name>Huzzle</name>
+
+  <properties>
+    <!-- JavaFX 21 needs JDK 17 or newer. -->
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.5</javafx.version>
+    <mainClass>app.Main</mainClass>
+  </properties>
+
+  <dependencies>
+    <!--
+      The javafx-controls POM carries OS-activated profiles that attach the
+      correct native (win / linux / macos-x86_64 / macos-aarch64) artifact for
+      whichever machine builds. Do not pin a classifier here.
+    -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- Not the Maven default layout: sources live in src/ with package folders. -->
+    <sourceDirectory>src</sourceDirectory>
+
+    <!--
+      Images, fonts and sounds are referenced by relative path at runtime
+      (e.g. "view/resources/img/logo.png"), and records.txt is read from the
+      project directory. Copying src/ into the classpath makes that work from
+      any OS without changing a single line of Java.
+    -->
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+
+      <!-- `mvn javafx:run` handles the module path and natives per platform. -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>${mainClass}</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
